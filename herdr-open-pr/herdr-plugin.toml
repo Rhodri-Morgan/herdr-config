@@ -1,0 +1,12 @@
+id = "herdr-open-pr"
+name = "herdr-open-pr"
+version = "0.1.0"
+description = "Open the GitHub PR for the focused pane's branch in the browser."
+min_herdr_version = "0.7.0"
+platforms = ["linux", "macos"]
+
+[[actions]]
+id = "open"
+title = "Open GitHub PR"
+description = "Open the PR for the focused pane's current branch in the browser."
+command = ["bash", "open-pr.sh"]
