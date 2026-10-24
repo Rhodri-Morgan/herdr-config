@@ -6,6 +6,8 @@ herdr plugins, one per top-level directory. A directory is a plugin when it hold
 
 - `<plugin>/herdr-plugin.toml`: manifest. `id` must equal the directory name, since `make install` unlinks by directory name.
 - `<plugin>/<script>`: what each `[[actions]]` `command` runs, relative to the plugin directory.
+- `<plugin>/keys.toml`: optional `[[keys.command]]` entries binding the plugin's actions.
+- `config.toml`: base herdr config, without plugin keybindings.
 - `COMMANDS.md`: one row per action. Update it whenever an action or keybinding changes.
 
 ## Writing actions
@@ -20,6 +22,6 @@ herdr plugins, one per top-level directory. A directory is a plugin when it hold
 
 Test against a throwaway session, not the live one: run `herdr --session <name>` in a split pane, then point commands at it with `HERDR_SOCKET_PATH=~/.config/herdr/sessions/<name>/herdr.sock herdr --session <name> ...`. `herdr pane read <pane> --source visible` shows the rendered sidebar. Stop it with `herdr --session <name> server stop`.
 
-## Keybindings
+## Config
 
-Bindings live in herdr's `config.toml`, not here. Its source of truth is `claude-code-config/herdr/config.toml`, whose installer replaces the live file, so add new bindings there too.
+`make config` replaces the live `~/.config/herdr/config.toml` with `config.toml` followed by every `*/keys.toml`; herdr has no config includes, so this concatenation is the only way to compose it. Put a plugin's bindings in its `keys.toml` and everything else in `config.toml`. Run `herdr server reload-config` and check `diagnostics` is empty after changing either.

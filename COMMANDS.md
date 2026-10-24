@@ -1,6 +1,6 @@
 # Commands
 
-Prefix is `ctrl+a`. Keybindings are set in herdr's `config.toml` (source: `claude-code-config/herdr/config.toml`). Every action can also be run with `herdr plugin action invoke <action> --plugin <plugin>`.
+Prefix is `ctrl+a`. Each plugin's keybindings live in its `keys.toml`. Every action can also be run with `herdr plugin action invoke <action> --plugin <plugin>`.
 
 | Plugin | Action | Keybinding | What it does |
 | --- | --- | --- | --- |
