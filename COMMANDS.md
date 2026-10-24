@@ -6,4 +6,3 @@ Prefix is `ctrl+a`. Keybindings are set in herdr's `config.toml` (source: `claud
 | --- | --- | --- | --- |
 | `herdr-blocked` | `toggle` | `prefix+shift+b` | Move the focused pane into its workspace's `⛔ blocked` tab, or back to its original tab if it is already there. |
 | `herdr-blocked` | `show` | `prefix+alt+b` | Show or hide blocked agents in the sidebar agents list. |
-| `herdr-open-pr` | `open` | none | Open the GitHub PR for the focused pane's branch in the browser. |
