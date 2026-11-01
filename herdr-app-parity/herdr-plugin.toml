@@ -1,7 +1,7 @@
 id = "herdr-app-parity"
 name = "herdr-app-parity"
 version = "0.1.0"
-description = "herdr-app's ctrl-a menu actions for terminal herdr: even out panes, open in Cursor, switch theme."
+description = "herdr-app's ctrl-a menu actions for terminal herdr: split and close with even widths, even out panes, open in Cursor, switch theme."
 min_herdr_version = "0.9.0"
 platforms = ["linux"]
 
