@@ -7,7 +7,7 @@ My herdr setup: the herdr-app desktop config (Windows, driving WSL) and the term
 | `app/` | herdr-app config: `keys.json`, `settings.json`, the `mine` layout, the `grey` and `rm-dev` themes, and mods. |
 | `core/config.toml` | herdr-core config: terminals start in WSL Ubuntu. |
 | `shell/herdr.zsh` | Sourced from `~/.zshrc`: labels each herdr terminal with its WSL folder. |
-| `herdr-blocked/`, `config.toml` | Terminal herdr plugin and config. |
+| `herdr-blocked/`, `herdr-app-parity/`, `config.toml` | Terminal herdr plugins and config, with the same ctrl-a keys as herdr-app. |
 
 herdr-app mods:
 
@@ -18,10 +18,12 @@ herdr-app mods:
 | `pane-z` | Pane header: agent name, WSL path, zoom badge. |
 | `tabs-bar` | Top bar: tab pills only when a space has more than one tab. |
 | `chrome-rm` | Sidebar header with the rhodrimorgan.dev logo. |
+| `spaces-rm`, `menu-rm` | Spaces list and right-click menu; Close on a space or tab skips the confirm. |
 
 | Plugin | What it does |
 | --- | --- |
-| `herdr-blocked` | Parks the focused pane in a `⛔ blocked` tab, tags it in the sidebar, and hides it from the agents list. |
+| `herdr-blocked` | Parks the focused pane in a `⛔ blocked` tab and tags it in the agents list. |
+| `herdr-app-parity` | herdr-app's menu actions herdr lacks: even out panes, open in Cursor, switch theme. |
 
 Keybindings and actions: [COMMANDS.md](COMMANDS.md).
 
@@ -51,4 +53,4 @@ Agents' WSL folders reach herdr-app through an `hc` label. Run `setx WSLENV HC_T
 ## Requirements
 
 - herdr 0.9.0+
-- `python3` for `herdr-blocked`
+- `python3` for the plugins
