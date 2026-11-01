@@ -6,39 +6,17 @@ import { v_flex, h_flex, InputState, Input } from "gpui-base";
 import { run, props, closeOverlay, theme, commands, focused, terminals, hc, panes, shared, setShared, spaces, exec as sh } from "herdr";
 
 const KEYS = {
-  c: "tab.new",
-  n: "tab.next",
-  p: "tab.prev",
-  T: "tab.rename",
-  "&": "tab.close",
+  r: "agent.rename",
+  b: "blocked.toggle",
+  c: "cursor.agent",
   v: "pane.split:right",
   "=": "pane.even",
-  t: "tab.new",
   x: "pane.close",
   z: "pane.zoom",
-  h: "pane.go:left",
-  j: "pane.go:down",
-  k: "pane.go:up",
-  l: "pane.go:right",
-  left: "pane.go:left",
-  down: "pane.go:down",
-  up: "pane.go:up",
-  right: "pane.go:right",
-  H: "pane.swap:left",
-  J: "pane.swap:down",
-  K: "pane.swap:up",
-  L: "pane.swap:right",
-  S: "space.new",
+  s: "space.new",
   R: "space.rename",
-  r: "agent.rename",
-  e: "cursor.agent",
-  E: "cursor.space",
-  "(": "space.prev",
-  ")": "space.next",
-  b: "blocked.toggle",
   ":": "app.palette",
   "?": "app.help",
-  ...Object.fromEntries([1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => [String(n), `tab.select:${n}`])),
 };
 
 // ponytail: weight 1 on every pane in the tab; evens a row of right splits, not nested down splits.
@@ -58,13 +36,10 @@ function zoom() {
 
 const CURSOR = "%LOCALAPPDATA%\\Programs\\cursor\\resources\\app\\bin\\cursor.cmd";
 
-// Folders come from the cwd label the zsh hook and Claude status line set.
-function cursor(all) {
-  const me = focused()?.terminal, space = spaces().find((s) => s.active)?.id;
-  const dirs = new Set(terminals()
-    .filter((x) => (all ? x.labels?.["herdr.space"] === space : x.address === me))
-    .map((x) => x.labels?.cwd).filter(Boolean));
-  if (dirs.size) sh("cmd.exe", ["/c", CURSOR, "--new-window", ...[...dirs].flatMap((d) => ["--folder-uri", `vscode-remote://wsl+Ubuntu${d}`])]);
+// The folder comes from the cwd label the zsh hook and Claude status line set.
+function cursor() {
+  const dir = terminals().find((x) => x.address === focused()?.terminal)?.labels?.cwd;
+  if (dir) sh("cmd.exe", ["/c", CURSOR, "--new-window", "--folder-uri", `vscode-remote://wsl+Ubuntu${dir}`]);
 }
 
 const THEMES = ["grey", "rm-dev"];
@@ -107,9 +82,9 @@ export default class Prefix extends View {
   render(cx) {
     const t = theme();
     const shown = [
-      ["Agent", [["r", "rename"], ["b", "block / unblock"], ["e", "open in Cursor"], ["E", "space in Cursor"]]],
+      ["Agent", [["r", "rename"], ["b", "block / unblock"], ["c", "open in Cursor"]]],
       ["Pane", [["v", "split right"], ["=", "even out"], ["x", "close"], ["z", "zoom"]]],
-      ["Space", [["S", "new"], ["R", "rename"]]],
+      ["Space", [["s", "new"], ["R", "rename"]]],
       ["App", [[":", "palette"], ["?", "help"]]],
       ["Theme \u21e7", THEMES.map((name, i) => [String(i + 1), name])],
     ];
@@ -132,9 +107,15 @@ export default class Prefix extends View {
         const action = KEYS[e.key_char ?? e.key] ?? KEYS[e.key];
         if (action === "blocked.toggle") return (requestBlock(), closeOverlay(props().overlay));
         if (action === "agent.rename" && this.terminal) return this.rename(cx);
-        if (action?.startsWith("cursor.")) return (cursor(action === "cursor.space"), closeOverlay(props().overlay));
+        if (action === "cursor.agent") return (cursor(), closeOverlay(props().overlay));
         if (action === "pane.zoom") return (zoom(), closeOverlay(props().overlay));
         if (action === "pane.even") return (even(), closeOverlay(props().overlay));
+        const f = focused();
+        // A tab's last pane closes the tab (and a space's last tab the space): skip Herdr's confirm.
+        if (action === "pane.close" && panes().filter((p) => p.tab === f?.tab).length === 1) {
+          run("tab.close", { id: f.tab, confirmed: true });
+          return closeOverlay(props().overlay);
+        }
         if (action === "pane.split:right" || action === "pane.close") {
           exec(action);
           // The change reaches panes() a moment after the command.

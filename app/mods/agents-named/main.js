@@ -89,7 +89,7 @@ function blockToggle(cx, { term, tab: from, space }) {
   }
   hc(["label", term, `blocked_from=${from}`]);
   // Back to the tab it came from, or the space's first tab if that one is gone.
-  const leave = () => { const t = others().find((t) => t.id === from) ?? others()[0]; if (t) run("tab.select", { id: t.id }); };
+  const leave = () => { const t = others().find((t) => t.id === from) ?? others()[0]; if (t) (run("tab.select", { id: t.id }), after(150, even)); };
   after(150, () => {
     if (bt) {
       run("tab.select", { id: bt.id });
@@ -359,7 +359,7 @@ export default class Agents extends View {
             cx.notify();
           })).child(pic)))
         .child(v_flex().flex_1().min_w(0)
-          .child(div().truncate().text_color(idle ? t.muted : t.foreground).child(names.get(a.address) || a.title || a.program?.name || name))
+          .child(div().truncate().text_size(14).font_semibold().text_color(idle ? t.muted : t.foreground).child(names.get(a.address) || a.title || a.program?.name || name))
           .child(div().truncate().text_size(10.5).text_color(t.dim).child(a.space_name)))
         .when(zoomed?.pane === a.pane, el => el.child(svg("mods/pane/zoom.svg").size(13).flex_none().text_color(t.accent)))
         .when(Boolean(machine), el => el.child(div().text_size(10).text_color(t.dim).child(machine)))
