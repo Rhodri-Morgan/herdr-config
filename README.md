@@ -23,7 +23,7 @@ herdr-app mods:
 | Plugin | What it does |
 | --- | --- |
 | `herdr-blocked` | Parks the focused pane in a `⛔ blocked` tab and tags it in the agents list. |
-| `herdr-app-parity` | herdr-app's menu actions herdr lacks: even out panes, open in Cursor, switch theme. |
+| `herdr-app-parity` | herdr-app's menu actions herdr lacks: split and close (widths evened after), even out panes, open in Cursor, switch theme. |
 
 Keybindings and actions: [COMMANDS.md](COMMANDS.md).
 
@@ -42,7 +42,7 @@ Plugins are linked, not copied, so edits here take effect on the next action run
 
 ## Config
 
-This repo owns herdr's `~/.config/herdr/config.toml`. `make config` builds it from `config.toml` plus every plugin's `keys.toml`, backs up the old file if it changed, and reloads herdr. Edit those files here, not the live config, which is overwritten on install.
+This repo owns herdr's `~/.config/herdr/config.toml`. `make config` builds it from `config.toml`, every plugin's `keys.toml` and the `THEME` file in `herdr-app-parity/themes/`, backs up the old file if it changed, and reloads herdr. Edit those files here, not the live config, which is overwritten on install.
 
 ## herdr-app
 

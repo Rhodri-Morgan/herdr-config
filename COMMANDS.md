@@ -18,7 +18,7 @@ Prefix is `ctrl-a` (the `prefix` mod), and only the keys its menu shows work.
 
 ## Terminal herdr
 
-Prefix is `ctrl+a`, and the keys are the herdr-app menu above and nothing else: every other built-in binding is unset in `config.toml`. Plugin keys live in each plugin's `keys.toml`; any action also runs with `herdr plugin action invoke <action> --plugin <plugin>`.
+Prefix is `ctrl+a`, and the keys are the herdr-app menu above and nothing else: every other built-in binding is unset in `config.toml`, apart from the navigate-mode movement keys. Plugin keys live in each plugin's `keys.toml`; any action also runs with `herdr plugin action invoke <action> --plugin <plugin>`.
 
 | Key | Source | What it does |
 | --- | --- | --- |

@@ -24,7 +24,7 @@ Test against a throwaway session, not the live one: run `herdr --session <name>`
 
 ## Config
 
-`make config` replaces the live `~/.config/herdr/config.toml` with `config.toml` followed by every `*/keys.toml`; herdr has no config includes, so this concatenation is the only way to compose it. Put a plugin's bindings in its `keys.toml` and everything else in `config.toml`. Run `herdr server reload-config` and check `diagnostics` is empty after changing either.
+`make config` replaces the live `~/.config/herdr/config.toml` with `config.toml`, every `*/keys.toml`, and the `THEME` file from `herdr-app-parity/themes/`; herdr has no config includes, so this concatenation is the only way to compose it. Put a plugin's bindings in its `keys.toml` and everything else in `config.toml`. After changing either, run `herdr server reload-config`, then `herdr config check` must report no diagnostics.
 
 ## herdr-app
 
