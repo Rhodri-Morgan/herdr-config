@@ -1,9 +1,20 @@
-# Every directory holding a herdr-plugin.toml is a plugin.
 PLUGINS := $(patsubst %/,%,$(dir $(wildcard */herdr-plugin.toml)))
 HERDR_CONFIG := $(HOME)/.config/herdr/config.toml
 
+# herdr-app and herdr-core run on Windows; their config lives in the Windows profile.
+WIN_HOME ?= $(patsubst %/.config/herdr-app,%,$(firstword $(wildcard /mnt/c/Users/*/.config/herdr-app)))
+APP_HOME := $(WIN_HOME)/.config/herdr-app
+CORE_HOME := $(WIN_HOME)/AppData/Roaming/herdr-core
+
 .PHONY: install
-install: link config
+install: link config install-app
+
+# Copied, not linked: Windows can't follow WSL symlinks. herdr-app reloads these live.
+.PHONY: install-app
+install-app:
+	@[ -d "$(APP_HOME)" ] || { echo "no herdr-app config found; set WIN_HOME"; exit 1; }
+	@cp -r app/. $(APP_HOME)/ && echo "installed $(APP_HOME)"
+	@mkdir -p $(CORE_HOME) && cp core/config.toml $(CORE_HOME)/config.toml && echo "installed $(CORE_HOME)/config.toml"
 
 .PHONY: link
 link:

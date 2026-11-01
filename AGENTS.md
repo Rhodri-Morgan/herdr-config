@@ -1,6 +1,6 @@
 # AGENTS.md
 
-herdr plugins, one per top-level directory. A directory is a plugin when it holds a `herdr-plugin.toml`; the `Makefile` discovers plugins that way.
+herdr-app config lives in `app/` (see the herdr-app section below). Terminal herdr plugins live one per top-level directory. A directory is a plugin when it holds a `herdr-plugin.toml`; the `Makefile` discovers plugins that way.
 
 ## Layout
 
@@ -25,3 +25,9 @@ Test against a throwaway session, not the live one: run `herdr --session <name>`
 ## Config
 
 `make config` replaces the live `~/.config/herdr/config.toml` with `config.toml` followed by every `*/keys.toml`; herdr has no config includes, so this concatenation is the only way to compose it. Put a plugin's bindings in its `keys.toml` and everything else in `config.toml`. Run `herdr server reload-config` and check `diagnostics` is empty after changing either.
+
+## herdr-app
+
+- `make install-app` copies `app/` over `%USERPROFILE%\.config\herdr-app`. Edit here, never only the live copy.
+- The live folder's `AGENTS.md`, `herdr.d.ts` and `gpui-kit.d.ts` document the mod API. Check a mod with `herdr-app.exe check <mod folder>`.
+- Never edit a shipped mod or layout in place: herdr-app overwrites them on start. Clone with `mod.clone` / `layout.clone`.
