@@ -1,7 +1,7 @@
 id = "herdr-blocked"
 name = "herdr-blocked"
 version = "0.1.0"
-description = "Park blocked tasks in a ⛔ blocked tab, tag them, and hide them from the agents list."
+description = "Park blocked tasks in a ⛔ blocked tab and tag them in the agents list."
 min_herdr_version = "0.9.0"
 platforms = ["linux", "macos"]
 
@@ -10,9 +10,3 @@ id = "toggle"
 title = "Toggle blocked"
 description = "Move the focused pane into (or back out of) its workspace's ⛔ blocked tab."
 command = ["python3", "-I", "blocked.py", "toggle"]
-
-[[actions]]
-id = "show"
-title = "Show/hide blocked tasks"
-description = "Toggle whether blocked tasks appear in the agents list."
-command = ["python3", "-I", "blocked.py", "show"]

@@ -16,32 +16,46 @@ enabled = true
 
 [keys]
 prefix = "ctrl+a"
+# Defaults blanked: herdr-app's ctrl-a menu (app/mods/prefix) replaces them; plugin keys.toml files add their own.
+rename_pane = "prefix+r"
+split_vertical = ""
+close_pane = ""
+zoom = "prefix+z"
+new_workspace = "prefix+s"
+rename_workspace = "prefix+shift+r"
+goto = "prefix+:"
+help = "prefix+?"
+settings = ""
+new_worktree = ""
+workspace_picker = ""
+detach = ""
+reload_config = ""
+open_notification_target = ""
+new_tab = ""
+rename_tab = ""
+previous_tab = ""
+next_tab = ""
+switch_tab = ""
+close_tab = ""
+close_workspace = ""
+edit_scrollback = ""
+copy_mode = ""
+focus_pane_left = ""
+focus_pane_down = ""
+focus_pane_up = ""
+focus_pane_right = ""
+swap_pane_left = ""
+swap_pane_down = ""
+swap_pane_up = ""
+swap_pane_right = ""
+cycle_pane_next = ""
+cycle_pane_previous = ""
+split_horizontal = ""
+resize_mode = ""
+toggle_sidebar = ""
 
 [ui.sidebar.spaces]
-rows = [["state_icon", "workspace", "$blocked"], ["branch", "git_status"]]
+rows = [["state_icon", "workspace"]]
 
 [ui.sidebar.agents]
-rows = [["state_icon", "state_text", "workspace", "tab"], ["agent"]]
-
-[theme.custom]
-red = "#D55E00"
-green = "#0072B2"
-
-[[keys.command]]
-key = "prefix+f"
-type = "popup"
-command = "gh dash"
-width = "95%"
-height = "95%"
-
-[[keys.command]]
-key = "prefix+shift+f"
-type = "plugin_action"
-command = "herdr-file-viewer.open-file-viewer"
-description = "file viewer (split)"
-
-[[keys.command]]
-key = "prefix+a"
-type = "plugin_action"
-command = "herdr-navigator.open"
-description = "navigator"
+rows = [["state_icon", { token = "pane", bold = true }, { token = "agent", dim = true }, "$blocked"], [{ token = "workspace", dim = true }]]

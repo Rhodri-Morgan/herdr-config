@@ -1,0 +1,35 @@
+[[keys.command]]
+key = "prefix+="
+type = "plugin_action"
+command = "herdr-app-parity.even"
+description = "even out"
+
+[[keys.command]]
+key = "prefix+c"
+type = "plugin_action"
+command = "herdr-app-parity.cursor"
+description = "open in Cursor"
+
+[[keys.command]]
+key = "prefix+shift+1"
+type = "plugin_action"
+command = "herdr-app-parity.theme-grey"
+description = "theme: grey"
+
+[[keys.command]]
+key = "prefix+shift+2"
+type = "plugin_action"
+command = "herdr-app-parity.theme-rm-dev"
+description = "theme: rm-dev"
+
+[[keys.command]]
+key = "prefix+v"
+type = "plugin_action"
+command = "herdr-app-parity.split"
+description = "split right"
+
+[[keys.command]]
+key = "prefix+x"
+type = "plugin_action"
+command = "herdr-app-parity.close"
+description = "close pane"

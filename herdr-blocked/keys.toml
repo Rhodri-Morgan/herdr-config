@@ -1,11 +1,5 @@
 [[keys.command]]
-key = "prefix+shift+b"
+key = "prefix+b"
 type = "plugin_action"
 command = "herdr-blocked.toggle"
-description = "toggle blocked"
-
-[[keys.command]]
-key = "prefix+alt+b"
-type = "plugin_action"
-command = "herdr-blocked.show"
-description = "show/hide blocked"
+description = "block / unblock"
