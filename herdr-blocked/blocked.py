@@ -1,14 +1,17 @@
-"""Park blocked tasks: move the pane into a "⛔ blocked" tab, tag it, and hide it from the agents list.
+"""Park blocked tasks: move the pane into a "⛔ blocked" tab and tag it; it stays in the agents list.
 
 A pane is blocked exactly when it sits in its workspace's blocked tab. The state
-file remembers each blocked pane's original tab (so unblocking can put it back)
-and the show/hide flag, since herdr does not report the active agent view.
+file remembers each blocked pane's original tab, so unblocking can put it back.
 """
 import json
 import os
 import socket
 import subprocess
 import sys
+
+# Moving a pane leaves both tabs uneven; herdr-app-parity evens them.
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.realpath(__file__)), "..", "herdr-app-parity"))
+import parity  # noqa: E402
 
 SOURCE = "herdr-blocked"
 TAG = "⛔ blocked"
@@ -21,7 +24,7 @@ def herdr(*args):
 
 
 def rpc(method, params):
-    # agent.view.set has no CLI wrapper, so talk to the socket directly.
+    # agent.view.clear has no CLI wrapper, so talk to the socket directly.
     with socket.socket(socket.AF_UNIX) as s:
         s.connect(os.environ["HERDR_SOCKET_PATH"])
         s.sendall(json.dumps({"id": "1", "method": method, "params": params}).encode() + b"\n")
@@ -45,21 +48,14 @@ def state_path():
 def load():
     try:
         with open(state_path()) as f:
-            return {"show": False, "origin": {}, **json.load(f)}
+            return {"origin": {}, **json.load(f)}
     except (OSError, ValueError):
-        return {"show": False, "origin": {}}
+        return {"origin": {}}
 
 
 def save(state):
     with open(state_path(), "w") as f:
         json.dump(state, f)
-
-
-def apply_view(state):
-    if state["show"]:
-        return rpc("agent.view.clear", {"source": SOURCE})
-    blocked = {"op": "eq", "field": {"token": "blocked"}, "value": TAG}
-    rpc("agent.view.set", {"source": SOURCE, "label": "hiding blocked", "filter": {"op": "not", "filter": blocked}})
 
 
 def blocked_tab(snap, ws):
@@ -104,19 +100,20 @@ def toggle(state):
     (unblock if tab and tab["tab_id"] == pane["tab_id"] else block)(snap, pane, state)
 
     ws = pane["workspace_id"]
-    flag = ["--token", f"blocked={TAG}"] if blocked_tab(snapshot(), ws) else ["--clear-token", "blocked"]
+    after = snapshot()
+    for t in after["tabs"]:
+        if t["workspace_id"] == ws:
+            parity.even(t["tab_id"])
+    flag = ["--token", f"blocked={TAG}"] if blocked_tab(after, ws) else ["--clear-token", "blocked"]
     herdr("workspace", "report-metadata", ws, "--source", SOURCE, *flag)
 
 
 def main():
     state = load()
-    if sys.argv[1] == "toggle":
-        toggle(state)
-    elif sys.argv[1] == "show":
-        state["show"] = not state["show"]
-        notify("Showing blocked tasks" if state["show"] else "Hiding blocked tasks")
+    toggle(state)
     save(state)
-    apply_view(state)
+    # Clears the agent view an older version set to hide blocked agents.
+    rpc("agent.view.clear", {"source": SOURCE})
 
 
 if __name__ == "__main__":

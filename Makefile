@@ -1,5 +1,7 @@
 PLUGINS := $(patsubst %/,%,$(dir $(wildcard */herdr-plugin.toml)))
 HERDR_CONFIG := $(HOME)/.config/herdr/config.toml
+# herdr-app-parity's ⇧1/⇧2 swap the theme in the live config until the next make config.
+THEME ?= rm-dev
 
 # herdr-app and herdr-core run on Windows; their config lives in the Windows profile.
 WIN_HOME ?= $(patsubst %/.config/herdr-app,%,$(firstword $(wildcard /mnt/c/Users/*/.config/herdr-app)))
@@ -24,11 +26,12 @@ link:
 	done
 
 # herdr has no config includes, so the live config is config.toml plus each
-# plugin's keys.toml, rebuilt on every install.
+# plugin's keys.toml and the THEME file, rebuilt on every install.
 .PHONY: config
 config:
 	@tmp=$$(mktemp); cat config.toml > $$tmp; \
 	for k in $(wildcard */keys.toml); do printf '\n' >> $$tmp; cat $$k >> $$tmp; done; \
+	printf '\n' >> $$tmp; cat herdr-app-parity/themes/$(THEME).toml >> $$tmp; \
 	if cmp -s $$tmp $(HERDR_CONFIG); then rm $$tmp; echo "config unchanged"; else \
 		mkdir -p $(dir $(HERDR_CONFIG)); \
 		[ -f $(HERDR_CONFIG) ] && cp $(HERDR_CONFIG) $(HERDR_CONFIG).bak-$$(date +%Y%m%d-%H%M%S); \

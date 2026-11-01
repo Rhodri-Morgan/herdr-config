@@ -1,0 +1,36 @@
+id = "herdr-app-parity"
+name = "herdr-app-parity"
+version = "0.1.0"
+description = "herdr-app's ctrl-a menu actions for terminal herdr: even out panes, open in Cursor, switch theme."
+min_herdr_version = "0.9.0"
+platforms = ["linux"]
+
+[[actions]]
+id = "even"
+title = "Even out panes"
+command = ["python3", "-I", "parity.py", "even"]
+
+[[actions]]
+id = "cursor"
+title = "Open in Cursor"
+command = ["python3", "-I", "parity.py", "cursor"]
+
+[[actions]]
+id = "theme-grey"
+title = "Theme: grey"
+command = ["python3", "-I", "parity.py", "theme", "grey"]
+
+[[actions]]
+id = "theme-rm-dev"
+title = "Theme: rm-dev"
+command = ["python3", "-I", "parity.py", "theme", "rm-dev"]
+
+[[actions]]
+id = "split"
+title = "Split right and even out"
+command = ["python3", "-I", "parity.py", "split"]
+
+[[actions]]
+id = "close"
+title = "Close pane and even out"
+command = ["python3", "-I", "parity.py", "close"]
