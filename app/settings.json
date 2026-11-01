@@ -1,0 +1,12 @@
+{
+  "zoom": 0.75,
+  "sounds": {
+    "enabled": true
+  },
+  "font": "Geist Mono",
+  "minimum_contrast": 1.0,
+  "colors": {
+    "blocked": "#D55E00",
+    "done": "#0072B2"
+  }
+}
