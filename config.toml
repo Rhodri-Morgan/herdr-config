@@ -58,4 +58,4 @@ toggle_sidebar = ""
 rows = [["state_icon", "workspace"]]
 
 [ui.sidebar.agents]
-rows = [["state_icon", { token = "pane", bold = true }, { token = "agent", dim = true }, "$blocked"], [{ token = "workspace", dim = true }]]
+rows = [["state_icon", { token = "pane", bold = true }, { token = "agent", dim = true }, "$blocked"], ["state_text", { token = "workspace", dim = true }]]
