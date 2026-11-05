@@ -3,7 +3,7 @@ name = "herdr-app-parity"
 version = "0.1.0"
 description = "herdr-app's ctrl-a menu actions for terminal herdr: split and close with even widths, even out panes, open in Cursor, switch theme."
 min_herdr_version = "0.9.0"
-platforms = ["linux"]
+platforms = ["linux", "macos"]
 
 [[actions]]
 id = "even"
@@ -34,3 +34,8 @@ command = ["python3", "-I", "parity.py", "split"]
 id = "close"
 title = "Close pane and even out"
 command = ["python3", "-I", "parity.py", "close"]
+
+[[actions]]
+id = "theme-clippd"
+title = "Theme: clippd"
+command = ["python3", "-I", "parity.py", "theme", "clippd"]

@@ -29,5 +29,5 @@ Prefix is `ctrl+a`, and the keys are the herdr-app menu above and nothing else: 
 | `z` | built-in `zoom` | Zoom. |
 | `=` | `herdr-app-parity.even` | Even out the panes in the tab. |
 | `s` / `R` | built-in | New workspace / rename workspace. |
-| `⇧1` / `⇧2` | `herdr-app-parity.theme-*` | Theme `grey` / `rm-dev`, written into the live config until the next `make config`. |
+| `⇧1` / `⇧2` / `⇧3` | `herdr-app-parity.theme-*` | Theme `grey` / `rm-dev` / `clippd`, written into the live config until the next `make config`. |
 | `:` / `?` | built-in `goto` / `help` | Session navigator / keybinding help. |
