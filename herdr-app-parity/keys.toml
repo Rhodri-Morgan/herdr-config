@@ -23,6 +23,12 @@ command = "herdr-app-parity.theme-rm-dev"
 description = "theme: rm-dev"
 
 [[keys.command]]
+key = "prefix+shift+3"
+type = "plugin_action"
+command = "herdr-app-parity.theme-clippd"
+description = "theme: clippd"
+
+[[keys.command]]
 key = "prefix+v"
 type = "plugin_action"
 command = "herdr-app-parity.split"

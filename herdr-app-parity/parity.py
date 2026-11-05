@@ -78,8 +78,9 @@ def cursor():
     if not pane:
         return
     if pane.get("cwd"):
-        # Plugin actions get no shell PATH or aliases, so find Cursor's WSL launcher directly.
-        launcher = next(iter(glob.glob("/mnt/c/Users/*/AppData/Local/Programs/cursor/resources/app/bin/cursor")), None)
+        # Plugin actions get no shell PATH or aliases, so find Cursor's launcher directly.
+        launcher = next(iter(glob.glob("/mnt/c/Users/*/AppData/Local/Programs/cursor/resources/app/bin/cursor")
+                             + glob.glob("/Applications/Cursor.app/Contents/Resources/app/bin/cursor")), None)
         if launcher:
             subprocess.Popen([launcher, "--new-window", pane["cwd"]], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 

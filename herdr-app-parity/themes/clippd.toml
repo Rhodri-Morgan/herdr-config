@@ -1,0 +1,19 @@
+# Clippd palette from mulligan-app/design-tokens.json.
+[theme]
+name = "catppuccin"
+
+[theme.custom]
+accent = "#fe3367"
+panel_bg = "#00142b"
+sidebar_bg = "#00142b"
+active_row_bg = "#03356e"
+selection_bg = "#072b56"
+surface0 = "#0a1e3d"
+surface1 = "#072b56"
+surface_dim = "#020617"
+overlay0 = "#94a3b8"
+overlay1 = "#cbd5e1"
+text = "#e2e8f0"
+subtext0 = "#94a3b8"
+red = "#ff383c"
+green = "#059669"
