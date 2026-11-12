@@ -5,6 +5,20 @@ agent_panel_sort = "spaces"
 status_indicators = "symbols"
 
 show_agent_labels_on_pane_borders = true
+
+[[ui.tab_bar_right]]
+type = "command"
+interval_seconds = 60
+command = '''
+f=$(df -g / | awk 'NR==2{print $4}')
+if [ "$f" -lt 5 ]; then
+  herdr notification show "Disk low" --body "${f} GB free" --sound request >/dev/null
+  echo "⚠ ${f}G free"
+else
+  echo "${f}G free"
+fi
+'''
+
 [terminal]
 new_cwd = "~/Documents/REPOS"
 
